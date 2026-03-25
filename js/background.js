@@ -7,11 +7,11 @@ let isMobile = false;
 
 // Configuration
 const CONFIG = {
-    particleCount: 50,
-    connectionDistance: 100,
+    particleCount: 120,
+    connectionDistance: 200,
     pointRadius: 2.5,
     pointAlpha: 0.7,
-    lineAlpha: 0.4,
+    lineAlpha: 0.8,
     speed: 0.5
 };
 
@@ -128,8 +128,8 @@ function resize() {
     
     // Adjust particles for mobile
     if (isMobile) {
-        CONFIG.particleCount = 30;
-        CONFIG.connectionDistance = 80;
+        CONFIG.particleCount = 40;
+        CONFIG.connectionDistance = 100;
         CONFIG.pointRadius = 2;
     } else {
         CONFIG.particleCount = 50;
