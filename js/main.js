@@ -98,6 +98,24 @@ const projectImageIndex = {
     3: 0
 };
 
+// WebP support detection
+function supportsWebP() {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    return canvas.toDataURL('image/webp').indexOf('image/webp') === 0;
+}
+
+const webpSupported = supportsWebP();
+
+// Function to get the correct image format
+function getImagePath(webpPath) {
+    if (webpSupported) {
+        return webpPath;
+    }
+    // Replace .webp with .gif for fallback
+    return webpPath.replace('.webp', '.gif');
+}
+
 // Stat card image
 let statCardImage = 'imgs/projects/campuslands-jovenes.jpg';
 
@@ -149,7 +167,7 @@ function initProjectImages() {
         // Show image and navigation if there are images
         if (images.length > 0) {
             imgElement.style.display = 'block';
-            imgElement.src = images[0];
+            imgElement.src = getImagePath(images[0]);
             placeholder.style.display = 'none';
             counter.style.display = 'inline-block';
             counter.textContent = `1/${images.length}`;
@@ -187,7 +205,7 @@ function updateProjectImage(card, projectId) {
     const imgElement = card.querySelector('.project-image');
     const counter = card.querySelector('.image-counter');
     
-    imgElement.src = images[currentIndex];
+    imgElement.src = getImagePath(images[currentIndex]);
     counter.textContent = `${currentIndex + 1}/${images.length}`;
 }
 
