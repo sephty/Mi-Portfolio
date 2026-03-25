@@ -84,8 +84,8 @@ let isCabinetOpen = false;
 // Project images data structure
 // Format: { projectId: [array of image URLs] }
 const projectImages = {
-    0: [], // ABC Campus
-    1: [], // DelRincón Hotel
+    0: ['imgs/projects/abc_campus.webp', 'imgs/projects/abc_campus_2.webp'], // ABC Campus
+    1: ['imgs/projects/delrincon.webp'], // DelRincón Hotel
     2: [], // LuxTime Watch Shop
     3: []  // Library Management
 };
@@ -99,7 +99,7 @@ const projectImageIndex = {
 };
 
 // Stat card image
-let statCardImage = null;
+let statCardImage = 'imgs/projects/campuslands-jovenes.jpg';
 
 function applyLang(lang) {
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -346,48 +346,87 @@ function initGSAPAnimations() {
 }
 
 /* ════════════════════════════════════════
-   CAROUSEL
+   CAROUSEL - INFINITE AUTO-SCROLL
 ════════════════════════════════════════ */
 function initCarousel() {
     const track = document.getElementById('carousel-track');
-    const slides = document.querySelectorAll('.carousel-card');
-    const nextBtn = document.getElementById('next-btn');
+    const slides = Array.from(document.querySelectorAll('.carousel-card'));
     const prevBtn = document.getElementById('prev-btn');
-    const dotsContainer = document.getElementById('carousel-dots');
+    const nextBtn = document.getElementById('next-btn');
+    const carouselWrapper = document.querySelector('.carousel-wrapper');
     
-    let index = 0;
+    let currentIndex = 0;
+    let autoScrollInterval = null;
+    let isHovering = false;
+    let isManualScroll = false;
 
-    // Create dots
-    slides.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if(i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
-        dotsContainer.appendChild(dot);
-    });
-    const dots = document.querySelectorAll('.dot');
-
-    function getMaxIndex() {
-        return window.innerWidth >= 768 ? slides.length - 2 : slides.length - 1;
+    function getCardsPerView() {
+        return window.innerWidth >= 768 ? 2 : 1;
     }
 
-    function goToSlide(i) {
-        const max = getMaxIndex();
-        index = i < 0 ? 0 : i > max ? max : i;
-        
-        const offset = 100;
-        track.style.transform = `translateX(-${index * offset}%)`;
-        
-        dots.forEach(d => d.classList.remove('active'));
-        if(dots[index]) dots[index].classList.add('active');
-        
-        // Update stat card image when first project changes
+    function updateCarousel() {
+        const cardsPerView = getCardsPerView();
+        const slideIndex = currentIndex % slides.length;
+        const translatePercent = (slideIndex / cardsPerView) * 100;
+        track.style.transform = `translateX(-${translatePercent}%)`;
+    }
+
+    function nextSlide() {
+        currentIndex++;
+        updateCarousel();
         updateStatImageFromProject();
     }
 
-    nextBtn.addEventListener('click', () => goToSlide(index + 1));
-    prevBtn.addEventListener('click', () => goToSlide(index - 1));
-    window.addEventListener('resize', () => goToSlide(index));
+    function prevSlide() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = slides.length - 1;
+        }
+        updateCarousel();
+        updateStatImageFromProject();
+    }
+
+    function startAutoScroll() {
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        
+        autoScrollInterval = setInterval(() => {
+            if (!isHovering && !isManualScroll) {
+                nextSlide();
+            }
+        }, 5000); // Scroll every 5 seconds (was 4s)
+    }
+
+    function stopAutoScroll() {
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = null;
+        }
+    }
+
+    // Event listeners - don't reset auto scroll
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+    });
+
+    carouselWrapper.addEventListener('mouseenter', () => {
+        isHovering = true;
+    });
+
+    carouselWrapper.addEventListener('mouseleave', () => {
+        isHovering = false;
+    });
+
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+
+    // Initialize
+    updateCarousel();
+    startAutoScroll();
 }
 
 /* ════════════════════════════════════════
