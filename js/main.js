@@ -38,6 +38,8 @@ const translations = {
         cabinet_close: "Cerrar",
         btn_cv: "Descargar CV",
         footer: "Hecho con código y café",
+        coming_soon_title: "Más proyectos en camino",
+        coming_soon_text: "Nuevos proyectos en desarrollo. Vuelve pronto!.",
         roles:["Junior Backend Developer", "API REST Enthusiast", "Problem Solver"]
     },
     en: {
@@ -76,6 +78,8 @@ const translations = {
         cabinet_close: "Close",
         btn_cv: "Download CV",
         footer: "Made with code and coffee",
+        coming_soon_title: "More Projects Coming",
+        coming_soon_text: "New projects in development. Check back soon!.",
         roles:["Junior Backend Developer", "API REST Enthusiast", "Problem Solver"]
     }
 };
