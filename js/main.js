@@ -12,9 +12,9 @@ const translations = {
         about_title: "Sobre mí",
         about_text: "Desarrollador apasionado por construir soluciones tecnológicas escalables. Especializado en APIs REST y desarrollo web interactivo. Combina pensamiento lógico con creatividad y adaptabilidad.",
         mission_title: "Misión",
-        mission_text: "Crecer como dev backend construyendo arquitecturas robustas y eficientes, manteniendo siempre un código limpio y escalable.",
+        mission_text: "Crecer como dev backend construyendo arquitecturas robustas y eficientes, manteniendo siempre un código limpio y escalable aprendiendo constantemente.",
         vision_title: "Visión",
-        vision_text: "Contribuir a productos que resuelvan problemas reales mediante la tecnología, liderando proyectos innovadores a nivel global.",
+        vision_text: "Contribuir a productos que resuelvan problemas reales mediante la tecnología, y la innovación a nivel global.",
         stat_label: "proyectos completados",
         motivation1: "Aprender cada día",
         motivation2: "Crear soluciones",
@@ -52,9 +52,9 @@ const translations = {
         about_title: "About me",
         about_text: "Passionate developer building scalable technological solutions. Specialized in REST APIs and interactive web development. Combines logical thinking with creativity and adaptability.",
         mission_title: "Mission",
-        mission_text: "Keep growing as a backend dev building robust and efficient architectures, always maintaining clean and scalable code.",
+        mission_text: "To keep growing as a backend dev building robust and efficient architectures, always maintaining clean and scalable code and learning further.",
         vision_title: "Vision",
-        vision_text: "Contribute to products that solve real problems through technology, leading innovative projects globally.",
+        vision_text: "To contribute to products that will solve real problems through technology, and innovation Globally.",
         stat_label: "completed projects",
         motivation1: "Learn every day",
         motivation2: "Create solutions",
@@ -90,11 +90,11 @@ let isCabinetOpen = false;
 // Project images data structure
 // Format: { projectId: [array of image URLs] }
 const projectImages = {
-    0: ['imgs/projects/abc_campus.webp', 'imgs/projects/abc_campus_2.webp'], // ABC Campus
-    1: ['imgs/projects/delrincon.webp'], // DelRincón Hotel
-    2: [], // LuxTime Watch Shop
-    3: [],  // Library Management
-    4: []  // n8n Absence Justification System
+    0: ['imgs/projects/abc/abc_campus.webp', 'imgs/projects/abc/abc_campus_2.webp'], // ABC Campus
+    1: ['imgs/projects/delrincon/delrincon.webp'], // DelRincón Hotel
+    2: ['imgs/projects/luxtime/luxtime1.gif', 'imgs/projects/luxtime/luxtime2.gif'], // LuxTime Watch Shop
+    3: ['imgs/projects/library_python/library1.webp'],  // Library Management
+    4: ['imgs/projects/n8n/image.png', 'imgs/projects/n8n/n8nworkflow.png']  // n8n Absence Justification System
 };
 
 // Track current image index for each project
@@ -125,7 +125,7 @@ function getImagePath(webpPath) {
 }
 
 // Stat card image
-let statCardImage = 'imgs/projects/campuslands-jovenes.jpg';
+let statCardImage = 'imgs/campuslands-jovenes.jpg';
 
 function applyLang(lang) {
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -300,7 +300,6 @@ function initMotivationCycle() {
     let motivationIndex = 0;
     const motivations = ['motivation1', 'motivation2', 'motivation3', 'motivation4'];
     
-    // Set campuslands-jovenes image
     const statImg = document.getElementById('stat-image');
     const statPlaceholder = document.querySelector('.stat-placeholder');
     if (statImg && statPlaceholder) {
