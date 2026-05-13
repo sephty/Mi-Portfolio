@@ -93,7 +93,7 @@ const projectImages = {
     0: ['imgs/projects/abc/abc_campus.webp', 'imgs/projects/abc/abc_campus_2.webp'], // ABC Campus
     1: ['imgs/projects/delrincon/delrincon.webp'], // DelRincón Hotel
     2: ['imgs/projects/luxtime/luxtime1.gif', 'imgs/projects/luxtime/luxtime2.gif'], // LuxTime Watch Shop
-    3: ['imgs/projects/library_python/library1.webp'],  // Library Management
+    3: ['imgs/projects/library_python/library.png'],  // Library Management
     4: ['imgs/projects/n8n/image.png', 'imgs/projects/n8n/n8nworkflow.png']  // n8n Absence Justification System
 };
 
