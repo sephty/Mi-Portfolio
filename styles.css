@@ -649,6 +649,7 @@ ul { list-style: none; }
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    margin-bottom: 2rem;
     cursor: pointer;
     transition: var(--transition);
     letter-spacing: 0.5px;

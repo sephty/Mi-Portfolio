@@ -25,6 +25,7 @@ const translations = {
         proj2_desc: "Sitio hotelero con integración REST API, gestión de usuarios y sistema de reservas.",
         proj3_desc: "Tienda de relojes construida solo con CSS puro. Carrusel simulado sin JavaScript.",
         proj4_desc: "App de consola para gestionar colecciones de libros, películas y música con valoraciones.",
+        proj5_desc: "Sistema automatizado con n8n que utiliza IA para analizar y clasificar justificaciones de inasistencias. Integra OpenAI, Google Sheets, Drive y notificaciones por Telegram.",
         btn_github: "Ver en GitHub",
         skills_title: "Habilidades",
         skills_tech: "Técnicas",
@@ -62,6 +63,7 @@ const translations = {
         proj2_desc: "Hotel website with REST API integration, user management and reservation system.",
         proj3_desc: "Watch store built with pure CSS only. Simulated carousel without JavaScript.",
         proj4_desc: "Console app to manage collections of books, movies and music with ratings.",
+        proj5_desc: "Automated system using n8n with AI to analyze and classify absence justifications. Integrates OpenAI, Google Sheets, Drive and Telegram notifications.",
         btn_github: "View on GitHub",
         skills_title: "Skills",
         skills_tech: "Technical",
@@ -87,7 +89,8 @@ const projectImages = {
     0: ['imgs/projects/abc_campus.webp', 'imgs/projects/abc_campus_2.webp'], // ABC Campus
     1: ['imgs/projects/delrincon.webp'], // DelRincón Hotel
     2: [], // LuxTime Watch Shop
-    3: []  // Library Management
+    3: [],  // Library Management
+    4: []  // n8n Absence Justification System
 };
 
 // Track current image index for each project
@@ -95,7 +98,8 @@ const projectImageIndex = {
     0: 0,
     1: 0,
     2: 0,
-    3: 0
+    3: 0,
+    4: 0
 };
 
 // WebP support detection
@@ -377,6 +381,9 @@ function initCarousel() {
     let autoScrollInterval = null;
     let isHovering = false;
     let isManualScroll = false;
+    let manualScrollTimeout = null;
+    const MANUAL_SCROLL_DURATION = 800; // Pause auto-scroll for 800ms after manual interaction
+    const AUTO_SCROLL_INTERVAL = 5000; // Scroll every 5 seconds
 
     function getCardsPerView() {
         return window.innerWidth >= 768 ? 2 : 1;
@@ -404,38 +411,63 @@ function initCarousel() {
         updateStatImageFromProject();
     }
 
-    function startAutoScroll() {
-        if (autoScrollInterval) clearInterval(autoScrollInterval);
-        
-        autoScrollInterval = setInterval(() => {
-            if (!isHovering && !isManualScroll) {
-                nextSlide();
-            }
-        }, 5000); // Scroll every 5 seconds (was 4s)
-    }
-
-    function stopAutoScroll() {
+    function pauseAutoScroll() {
         if (autoScrollInterval) {
             clearInterval(autoScrollInterval);
             autoScrollInterval = null;
         }
     }
 
-    // Event listeners - don't reset auto scroll
+    function startAutoScroll() {
+        pauseAutoScroll();
+        autoScrollInterval = setInterval(() => {
+            if (!isHovering && !isManualScroll) {
+                nextSlide();
+            }
+        }, AUTO_SCROLL_INTERVAL);
+    }
+
+    function handleManualInteraction() {
+        isManualScroll = true;
+        
+        // Clear existing timeout to prevent multiple simultaneous timers
+        if (manualScrollTimeout) {
+            clearTimeout(manualScrollTimeout);
+        }
+        
+        // Pause the auto-scroll during manual interaction
+        pauseAutoScroll();
+        
+        // Resume auto-scroll after the manual scroll duration
+        manualScrollTimeout = setTimeout(() => {
+            isManualScroll = false;
+            manualScrollTimeout = null;
+            startAutoScroll();
+        }, MANUAL_SCROLL_DURATION);
+    }
+
+    // Event listeners for navigation buttons
     prevBtn.addEventListener('click', () => {
         prevSlide();
+        handleManualInteraction();
     });
 
     nextBtn.addEventListener('click', () => {
         nextSlide();
+        handleManualInteraction();
     });
 
     carouselWrapper.addEventListener('mouseenter', () => {
         isHovering = true;
+        pauseAutoScroll();
     });
 
     carouselWrapper.addEventListener('mouseleave', () => {
         isHovering = false;
+        // Restart auto-scroll only if not in manual scroll mode
+        if (!isManualScroll) {
+            startAutoScroll();
+        }
     });
 
     window.addEventListener('resize', () => {
@@ -462,7 +494,7 @@ cabinetToggle.addEventListener('click', () => {
         iconLock.style.display = 'none';
         iconUnlock.style.display = 'block';
         document.getElementById('cabinet-text').textContent = translations[currentLang]['cabinet_close'];
-        gsap.to(cabinetContent, {height: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out'});
+        gsap.to(cabinetContent, {height: 'auto', opacity: 1,  duration: 0.4, ease: 'power2.out'});
     } else {
         iconUnlock.style.display = 'none';
         iconLock.style.display = 'block';
