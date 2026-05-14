@@ -361,6 +361,7 @@ ul { list-style: none; }
     padding: 1rem 0;
     margin: 0 auto;
     position: relative;
+    z-index: 2;
 }
 
 .carousel-track {
@@ -377,6 +378,8 @@ ul { list-style: none; }
     display: flex;
     flex-direction: column;
     transition: var(--transition);
+    position: relative;
+    z-index: 2;
 }
 
 .carousel-card:hover {
@@ -386,13 +389,17 @@ ul { list-style: none; }
 
 .coming-soon-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100%;
+    padding: 2rem 1rem;
+    min-height: 350px;
 }
 
 .coming-soon-card:hover {
     transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--glow);
+    z-index: 10;
 }
 
 .coming-soon-content {
@@ -689,6 +696,18 @@ ul { list-style: none; }
     background: rgba(10, 132, 255, 0.25);
     transform: translateY(-2px);
     box-shadow: var(--glow);
+}
+
+.main-skill-purple {
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    color: #a855f7;
+}
+
+.main-skill-purple:hover {
+    background: rgba(168, 85, 247, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
 }
 
 .soft-pill {

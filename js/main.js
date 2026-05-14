@@ -40,7 +40,7 @@ const translations = {
         footer: "Hecho con código y café",
         coming_soon_title: "Más proyectos en camino",
         coming_soon_text: "Nuevos proyectos en desarrollo. Vuelve pronto!.",
-        roles:["Junior Backend Developer", "API REST Enthusiast", "Problem Solver"]
+        roles:["Backend Developer", "API REST Enthusiast", "Problem Solver"]
     },
     en: {
         nav_home: "Home",
@@ -80,7 +80,7 @@ const translations = {
         footer: "Made with code and coffee",
         coming_soon_title: "More Projects Coming",
         coming_soon_text: "New projects in development. Check back soon!.",
-        roles:["Junior Backend Developer", "API REST Enthusiast", "Problem Solver"]
+        roles:["Backend Developer", "API REST Enthusiast", "Problem Solver"]
     }
 };
 
@@ -88,7 +88,6 @@ let currentLang = localStorage.getItem('lang') || 'es';
 let isCabinetOpen = false;
 
 // Project images data structure
-// Format: { projectId: [array of image URLs] }
 const projectImages = {
     0: ['imgs/projects/abc/abc_campus.webp', 'imgs/projects/abc/abc_campus_2.webp'], // ABC Campus
     1: ['imgs/projects/delrincon/delrincon.webp'], // DelRincón Hotel
@@ -106,7 +105,6 @@ const projectImageIndex = {
     4: 0
 };
 
-// WebP support detection
 function supportsWebP() {
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = 1;
@@ -115,16 +113,13 @@ function supportsWebP() {
 
 const webpSupported = supportsWebP();
 
-// Function to get the correct image format
 function getImagePath(webpPath) {
     if (webpSupported) {
         return webpPath;
     }
-    // Replace .webp with .gif for fallback
     return webpPath.replace('.webp', '.gif');
 }
 
-// Stat card image
 let statCardImage = 'imgs/campuslands-jovenes.jpg';
 
 function applyLang(lang) {
@@ -217,6 +212,26 @@ function updateProjectImage(card, projectId) {
     counter.textContent = `${currentIndex + 1}/${images.length}`;
 }
 
+function initProjectCardClicks() {
+    // Make entire project card clickable to navigate to GitHub link
+    document.querySelectorAll('.carousel-card[data-project]').forEach(card => {
+        card.style.cursor = 'pointer';
+        
+        card.addEventListener('click', (e) => {
+            // Don't navigate if clicking on image navigation buttons
+            if (e.target.closest('.prev-image') || e.target.closest('.next-image')) {
+                return;
+            }
+            
+            // Get the GitHub link from the card
+            const githubLink = card.querySelector('.btn-secondary');
+            if (githubLink && githubLink.href) {
+                window.open(githubLink.href, '_blank');
+            }
+        });
+    });
+}
+
 function setProjectImages(projectId, imageArray) {
     if (projectId >= 0 && projectId < 4) {
         projectImages[projectId] = imageArray;
@@ -231,7 +246,6 @@ function setProjectImages(projectId, imageArray) {
 
 function setStatImage(imageUrl) {
     statCardImage = imageUrl;
-    // Update if DOM is ready
     if (document.readyState !== 'loading') {
         const statImg = document.getElementById('stat-image');
         const statPlaceholder = document.querySelector('.stat-placeholder');
@@ -249,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTypewriter();
     initMotivationCycle();
     initProjectImages();
+    initProjectCardClicks();
     initGSAPAnimations();
     initCarousel();
 });
@@ -314,7 +329,6 @@ function initMotivationCycle() {
         motivationIndex++;
     }
     
-    // Change every 5 seconds
     cycleMotivation();
     setInterval(cycleMotivation, 5000);
 }
@@ -331,10 +345,8 @@ function updateStatImageFromProject() {
 function initGSAPAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initial Loading Timeline
     const tl = gsap.timeline();
     
-    // Setup Hero Name for stagger
     const nameEl = document.getElementById('hero-name');
     const nameText = nameEl.textContent;
     nameEl.innerHTML = '';
@@ -438,10 +450,8 @@ function initCarousel() {
             clearTimeout(manualScrollTimeout);
         }
         
-        // Pause the auto-scroll during manual interaction
         pauseAutoScroll();
         
-        // Resume auto-scroll after the manual scroll duration
         manualScrollTimeout = setTimeout(() => {
             isManualScroll = false;
             manualScrollTimeout = null;
