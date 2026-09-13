@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Helvetica Now Black';
+  src: url('/assets/game/fonts/helvetica-now-black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bodoni';
+  src: url('/assets/game/fonts/bodoni.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Times New Roman Bold';
+  src: url('/assets/game/fonts/times-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Butler';
+  src: url('/assets/refantazio/fonts/Butler_ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Butler';
+  src: url('/assets/refantazio/fonts/Butler_Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display SC';
+  src: url('/assets/refantazio/fonts/PlayfairDisplaySC-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-ink: #05050a;
+  --parchment: #f0ece0;
+  --parchment-dim: #8b8a97;
+  --indigo-core: #3a49c9;
+  --indigo-bright: #7c87ea;
+  --emperor-crimson: #d1233a;
+  --gold-accent: #f2c14e;
+}
+
+html, body {
+  background-color: var(--bg-ink);
+  color: var(--parchment);
+  font-family: 'Inter', sans-serif;
+  cursor: url('/assets/game/cursors/k32.cur'), default;
+  overflow-x: hidden;
+}
+
+button, a, input, [role="button"], .interactive-cursor {
+  cursor: url('/assets/game/cursors/k32.cur'), pointer !important;
+}
+
+/* Atlus Metaphor Custom Clip-paths */
+.clip-atlus-card {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.clip-atlus-card-reverse {
+  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+}
+
+.clip-slanted-item {
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+}
+
+.clip-banner {
+  clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
+}
+
+.clip-shard-1 {
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+}
+
+/* Atlus Persona / Metaphor Bold Outline Typography */
+.text-outline-dark {
+  text-shadow:
+    -2px -2px 0 #05050a,
+     2px -2px 0 #05050a,
+    -2px  2px 0 #05050a,
+     2px  2px 0 #05050a,
+     0px  3px 0 #05050a;
+}
+
+.text-outline-crimson {
+  text-shadow:
+    -2px -2px 0 #d1233a,
+     2px -2px 0 #d1233a,
+    -2px  2px 0 #d1233a,
+     2px  2px 0 #d1233a;
+}
+
+.text-outline-parchment {
+  text-shadow:
+    -2px -2px 0 #f0ece0,
+     2px -2px 0 #f0ece0,
+    -2px  2px 0 #f0ece0,
+     2px  2px 0 #f0ece0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #05050a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a49c9;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d1233a;
+}
+
+/* ── Orbital Animation Keyframes ── */
+@keyframes orbit-1 {
+  from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
+}
+@keyframes orbit-2 {
+  from { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+}
+@keyframes orbit-3 {
+  from { transform: rotate(0deg) translateX(260px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(260px) rotate(-360deg); }
+}
+@keyframes orbit-4 {
+  from { transform: rotate(0deg) translateX(310px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(310px) rotate(-360deg); }
+}
+
+/* Slow rotating ring for blueprint overlay */
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes rotate-slow-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+/* Subtle planet surface texture rotation */
+@keyframes planet-surface-rotate {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
