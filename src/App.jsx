@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { translations } from './data/translations';
 import { portfolioData } from './data/portfolioData';
 import { SpaceCanvas } from './components/SpaceCanvas';
@@ -7,23 +7,24 @@ import { PlanetLimb } from './components/PlanetLimb';
 import { Navbar } from './components/Navbar';
 import { RadialHero } from './components/RadialHero';
 import { MobileHero } from './components/MobileHero';
-import { AboutPanel } from './components/panels/AboutPanel';
-import { ProjectsPanel } from './components/panels/ProjectsPanel';
-import { SkillsPanel } from './components/panels/SkillsPanel';
-import { ExperiencePanel } from './components/panels/ExperiencePanel';
-import { ContactCabinet } from './components/panels/ContactCabinet';
-import { X, ArrowLeft, Disc } from 'lucide-react';
+import { LoadingScreen } from './components/LoadingScreen';
+
+// Lazy-loaded panel components for high performance and minimal initial bundle size
+const AboutPanel = lazy(() => import('./components/panels/AboutPanel').then(m => ({ default: m.AboutPanel })));
+const ProjectsPanel = lazy(() => import('./components/panels/ProjectsPanel').then(m => ({ default: m.ProjectsPanel })));
+const SkillsPanel = lazy(() => import('./components/panels/SkillsPanel').then(m => ({ default: m.SkillsPanel })));
+const ContactCabinet = lazy(() => import('./components/panels/ContactCabinet').then(m => ({ default: m.ContactCabinet })));
 
 // Dynamic Registry of Panels: allows effortlessly registering new sections
 const PANEL_COMPONENTS = {
   about: AboutPanel,
   projects: ProjectsPanel,
   skills: SkillsPanel,
-  experience: ExperiencePanel,
   contact: ContactCabinet
 };
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentLang, setCurrentLang] = useState(() => {
     return localStorage.getItem('lang') || 'es';
   });
@@ -88,6 +89,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-bg-ink text-parchment flex flex-col justify-between overflow-x-hidden selection:bg-cyan-500 selection:text-bg-ink">
+      {/* 0. Authentic Metaphor Loading Screen */}
+      {isLoading && (
+        <LoadingScreen
+          onComplete={() => setIsLoading(false)}
+          currentLang={currentLang}
+        />
+      )}
+
       {/* 1. Deep Cosmic Void with Nebula Clouds & Sparkling Star Cluster (NASA Image 2) */}
       <SpaceCanvas isZoomed={!!activePanel} activePlanetKey={targetPlanetKey} />
 
@@ -137,33 +146,22 @@ export default function App() {
         ) : (
           // DOCKED METAPHOR CODEX PANEL (Left Flank UI with NASA Planet Limb on Right)
           <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-10 z-20">
-            {/* Top Codex Navigation Strip */}
-            <div className="flex items-center justify-between mb-8">
-              <button
-                onClick={handleClosePanel}
-                className="inline-flex items-center gap-2.5 px-4 py-2 font-metaphor text-xs uppercase tracking-wider bg-bg-ink/90 border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-bg-ink rounded transition-all duration-200 shadow-lg"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>{translations[currentLang].btn_back}</span>
-              </button>
-
-              <button
-                onClick={handleClosePanel}
-                className="w-9 h-9 rounded bg-bg-ink/90 border border-parchment/30 flex items-center justify-center text-parchment hover:bg-emperor-crimson transition-colors shadow"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
             {/* Sub-Page Content Container (Aligned to allow NASA planet limb visible on right flank) */}
             <div className="max-w-4xl">
-              {(() => {
-                const ActiveComponent = PANEL_COMPONENTS[activePanel];
-                return ActiveComponent ? (
-                  <ActiveComponent currentLang={currentLang} translations={translations} />
-                ) : null;
-              })()}
+              <Suspense
+                fallback={
+                  <div className="p-12 flex items-center justify-center font-mono text-xs text-cyan-300">
+                    <span className="animate-pulse tracking-widest">[CODEX // ACCESSING ARCHIVE...]</span>
+                  </div>
+                }
+              >
+                {(() => {
+                  const ActiveComponent = PANEL_COMPONENTS[activePanel];
+                  return ActiveComponent ? (
+                    <ActiveComponent currentLang={currentLang} translations={translations} />
+                  ) : null;
+                })()}
+              </Suspense>
             </div>
           </div>
         )}

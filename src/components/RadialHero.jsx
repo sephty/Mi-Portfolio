@@ -3,12 +3,11 @@ import { SunNode } from './SunNode';
 import { MetaphorCascadeMenu } from './MetaphorCascadeMenu';
 import { portfolioData } from '../data/portfolioData';
 
-// Generously spaced orbits stepping up by ~75px so planets NEVER bunch or overlap
+// Generously spaced orbits stepping up by ~85px in 3 balanced sectors
 const orbitConfig = {
-  projects:   { a: 230, b: 135, speed: 0.0040, startAngle: 20  },  // Quadrant 1 (Top-Right)
-  skills:     { a: 305, b: 180, speed: 0.0030, startAngle: 110 },  // Quadrant 2 (Bottom-Right)
-  experience: { a: 380, b: 225, speed: 0.0022, startAngle: 200 },  // Quadrant 3 (Bottom-Left)
-  contact:    { a: 455, b: 270, speed: 0.0016, startAngle: 290 },  // Quadrant 4 (Top-Left)
+  projects: { a: 240, b: 140, speed: 0.0035, startAngle: 30  },  // Sector 1 (Upper-Right)
+  skills:   { a: 325, b: 190, speed: 0.0026, startAngle: 150 },  // Sector 2 (Bottom)
+  contact:  { a: 410, b: 240, speed: 0.0018, startAngle: 270 },  // Sector 3 (Upper-Left)
 };
 
 const ORBIT_TILT = -9; // subtle orbital plane inclination

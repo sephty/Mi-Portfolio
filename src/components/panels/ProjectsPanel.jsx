@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { portfolioData } from '../../data/portfolioData';
-import { ExternalLink, ChevronLeft, ChevronRight, Sparkles, Award } from 'lucide-react';
+import { ExternalLink, ChevronLeft, ChevronRight, Sparkles, Award, Code2 } from 'lucide-react';
 import { GithubIcon } from '../Icons';
 
 export const ProjectsPanel = ({ currentLang, translations }) => {
@@ -91,9 +91,10 @@ export const ProjectsPanel = ({ currentLang, translations }) => {
       {/* ── PROJECTS GRID: STYLED LIKE METAPHOR BOUNTY / QUEST CARDS ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {projects.map((project, idx) => {
-          const currentImgIndex = activeImageIndices[project.id] || 0;
-          const currentImage = project.images[currentImgIndex];
-          const hasMultipleImages = project.images.length > 1;
+          const hasImages = project.images && project.images.length > 0;
+          const currentImgIndex = hasImages ? (activeImageIndices[project.id] || 0) : 0;
+          const currentImage = hasImages ? project.images[currentImgIndex] : null;
+          const hasMultipleImages = hasImages && project.images.length > 1;
           const desc = currentLang === 'es' ? project.desc_es : project.desc_en;
 
           return (
@@ -125,38 +126,83 @@ export const ProjectsPanel = ({ currentLang, translations }) => {
 
               {/* Image Screenshot Frame */}
               <div className="relative w-full h-56 sm:h-64 bg-black/80 overflow-hidden select-none border-y border-parchment/10">
-                <img
-                  src={currentImage}
-                  alt={project.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    if (e.target.src.endsWith('.webp')) {
-                      e.target.src = e.target.src.replace('.webp', '.gif');
-                    }
-                  }}
-                />
-
-                {/* Gallery Navigation Buttons */}
-                {hasMultipleImages && (
+                {hasImages ? (
                   <>
-                    <button
-                      onClick={(e) => prevImage(e, project.id, project.images.length)}
-                      className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded bg-bg-ink/80 text-parchment flex items-center justify-center hover:bg-cyan-500 hover:text-bg-ink transition-colors border border-parchment/30"
-                      aria-label="Previous image"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={(e) => nextImage(e, project.id, project.images.length)}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded bg-bg-ink/80 text-parchment flex items-center justify-center hover:bg-cyan-500 hover:text-bg-ink transition-colors border border-parchment/30"
-                      aria-label="Next image"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                    <div className="absolute bottom-2 right-3 px-2 py-0.5 font-mono text-[10px] bg-bg-ink/90 text-cyan-300 border border-cyan-500/30 rounded">
-                      IMG {currentImgIndex + 1} / {project.images.length}
-                    </div>
+                    <img
+                      src={currentImage}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        if (e.target.src.endsWith('.webp')) {
+                          e.target.src = e.target.src.replace('.webp', '.gif');
+                        }
+                      }}
+                    />
+
+                    {/* Gallery Navigation Buttons */}
+                    {hasMultipleImages && (
+                      <>
+                        <button
+                          onClick={(e) => prevImage(e, project.id, project.images.length)}
+                          className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded bg-bg-ink/80 text-parchment flex items-center justify-center hover:bg-cyan-500 hover:text-bg-ink transition-colors border border-parchment/30"
+                          aria-label="Previous image"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={(e) => nextImage(e, project.id, project.images.length)}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded bg-bg-ink/80 text-parchment flex items-center justify-center hover:bg-cyan-500 hover:text-bg-ink transition-colors border border-parchment/30"
+                          aria-label="Next image"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                        <div className="absolute bottom-2 right-3 px-2 py-0.5 font-mono text-[10px] bg-bg-ink/90 text-cyan-300 border border-cyan-500/30 rounded">
+                          IMG {currentImgIndex + 1} / {project.images.length}
+                        </div>
+                      </>
+                    )}
                   </>
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-[#0a1829] via-[#06101c] to-[#03080f] p-6 text-center">
+                    {/* Blueprint drafting grid overlay */}
+                    <div
+                      className="absolute inset-0 opacity-20 pointer-events-none"
+                      style={{
+                        backgroundImage: `
+                          linear-gradient(to right, rgba(56, 189, 248, 0.25) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(56, 189, 248, 0.25) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '24px 24px'
+                      }}
+                    />
+
+                    {/* Astrolabe watermark */}
+                    <svg className="absolute w-44 h-44 text-cyan-400/10 pointer-events-none" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
+                      <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" strokeWidth="0.8" />
+                      <polygon points="50,10 85,75 15,75" fill="none" stroke="currentColor" strokeWidth="0.6" />
+                      <polygon points="50,90 15,25 85,25" fill="none" stroke="currentColor" strokeWidth="0.6" />
+                    </svg>
+
+                    {/* Center blueprint content */}
+                    <div className="relative z-10 flex flex-col items-center gap-2">
+                      <div className="w-12 h-12 rounded-full border border-cyan-400/40 bg-cyan-950/50 flex items-center justify-center text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+                        <Code2 className="w-6 h-6" />
+                      </div>
+                      <div className="font-mono text-xs text-cyan-300 font-bold tracking-widest uppercase">
+                        {currentLang === 'es' ? 'ESQUEMA EN DESARROLLO' : 'SCHEMATIC ARCHIVE'}
+                      </div>
+                      <div className="font-mono text-[10px] text-parchment/60 tracking-wider">
+                        {currentLang === 'es' ? '// CAPTURAS DE TELEMETRÍA PENDIENTES' : '// TELEMETRY CAPTURES PENDING'}
+                      </div>
+                    </div>
+
+                    {/* Corner technical annotations */}
+                    <div className="absolute top-2.5 left-3 font-mono text-[9px] text-cyan-400/50">+ ARC.0{idx + 1}</div>
+                    <div className="absolute top-2.5 right-3 font-mono text-[9px] text-cyan-400/50">SYS_REV_26</div>
+                    <div className="absolute bottom-2.5 left-3 font-mono text-[9px] text-cyan-400/50">CORE // BACKEND</div>
+                    <div className="absolute bottom-2.5 right-3 font-mono text-[9px] text-cyan-400/50">[PENDING_MEDIA]</div>
+                  </div>
                 )}
               </div>
 

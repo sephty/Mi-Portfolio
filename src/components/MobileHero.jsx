@@ -14,7 +14,6 @@ export const MobileHero = ({
     about: { size: "text-2xl", rotate: "-rotate-2", sub_es: "PERFIL & FILOSOFÍA", sub_en: "PROFILE & PHILOSOPHY" },
     projects: { size: "text-3xl", rotate: "rotate-1", sub_es: "SISTEMAS JAVA & APIS", sub_en: "JAVA SYSTEMS & APIS" },
     skills: { size: "text-2xl", rotate: "-rotate-1", sub_es: "SPRING BOOT & STACK", sub_en: "SPRING BOOT & STACK" },
-    experience: { size: "text-2xl", rotate: "rotate-2", sub_es: "TRAYECTORIA", sub_en: "TRACK RECORD" },
     contact: { size: "text-2xl", rotate: "-rotate-1", sub_es: "CANALES DIRECTOS", sub_en: "DIRECT CHANNELS" }
   };
 

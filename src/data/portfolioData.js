@@ -9,6 +9,28 @@ export const portfolioData = {
   },
   projects: [
     {
+      id: "spring-logitrack",
+      title: "Spring- LogiTrack",
+      year: "2026",
+      desc_es: "Sistema de gestión de bodegas e inventario desarrollado en Java (Spring Boot) con arquitectura por capas y MySQL. Implementa operaciones CRUD, autenticación JWT con control de acceso por roles, auditoría automática mediante triggers, y documentación con Swagger/OpenAPI.",
+      desc_en: "Warehouse and inventory management system engineered in Java (Spring Boot) with layered architecture and MySQL. Features CRUD operations, role-based JWT authentication, automated trigger auditing, and Swagger/OpenAPI documentation.",
+      techStack: ["Java", "Spring Boot", "MySQL", "JWT", "Swagger / OpenAPI"],
+      githubUrl: "https://github.com/sephty",
+      images: [],
+      featured: true
+    },
+    {
+      id: "java-tecnostore",
+      title: "JAVA- TecnoStore",
+      year: "2026",
+      desc_es: "Sistema de gestión comercial desarrollado en Java (JDBC) con arquitectura por capas y bases de datos MySQL. Implementa operaciones CRUD, procesamiento de datos con Stream API, persistencia de archivos, patrones de diseño (Factory/Singleton) y principios SOLID.",
+      desc_en: "Commercial management system engineered in Java (JDBC) with layered architecture and MySQL database. Implements CRUD operations, Stream API data pipelines, file persistence, design patterns (Factory/Singleton), and SOLID principles.",
+      techStack: ["Java", "JDBC", "MySQL", "Stream API", "SOLID & Design Patterns"],
+      githubUrl: "https://github.com/sephty",
+      images: [],
+      featured: true
+    },
+    {
       id: "n8n",
       title: "n8n Absence System",
       year: "2026",
@@ -177,18 +199,6 @@ export const portfolioData = {
       ringColor: null
     },
     {
-      key: "experience",
-      label_es: "TRAYECTORIA",
-      label_en: "EXPERIENCE",
-      sub_es: "FORMACIÓN & HITOS",
-      sub_en: "FORMATION & TRACK",
-      color: "#4dcca0",
-      gradient: "from-emerald-200 via-emerald-500 to-emerald-900",
-      orbitR: 305,
-      size: 30,
-      ringColor: "#4dcca0"
-    },
-    {
       key: "contact",
       label_es: "CONTACTO",
       label_en: "CONTACT",
@@ -196,7 +206,7 @@ export const portfolioData = {
       sub_en: "CABINET & CHANNELS",
       color: "#d1233a",
       gradient: "from-red-200 via-rose-500 to-rose-900",
-      orbitR: 375,
+      orbitR: 340,
       size: 24,
       ringColor: null
     }

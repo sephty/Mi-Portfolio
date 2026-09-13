@@ -16,15 +16,99 @@ export const SpaceCanvas = ({ isZoomed = false, activePlanetKey = null }) => {
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      renderBackgroundCache();
       initStars();
     };
     window.addEventListener('resize', handleResize);
 
-    // Star data with 3 depth layers
+    // Cached offscreen background canvas for maximum 60/120fps performance
+    let bgCanvas = document.createElement('canvas');
+    let bgCtx = bgCanvas.getContext('2d');
+
+    const renderBackgroundCache = () => {
+      bgCanvas.width = width;
+      bgCanvas.height = height;
+
+      // Deep cosmic gradient
+      const bgGrad = bgCtx.createRadialGradient(
+        width * 0.65,
+        height * 0.45,
+        50,
+        width * 0.5,
+        height * 0.5,
+        Math.max(width, height) * 0.85
+      );
+      bgGrad.addColorStop(0, '#0d1127'); // deep indigo core
+      bgGrad.addColorStop(0.35, '#070918'); // midnight void
+      bgGrad.addColorStop(0.7, '#05060f');
+      bgGrad.addColorStop(1, '#020205'); // outer void
+      bgCtx.fillStyle = bgGrad;
+      bgCtx.fillRect(0, 0, width, height);
+
+      // Nebula 1: Ethereal Violet Dust
+      const neb1 = bgCtx.createRadialGradient(
+        width * 0.75,
+        height * 0.35,
+        20,
+        width * 0.75,
+        height * 0.35,
+        width * 0.45
+      );
+      neb1.addColorStop(0, 'rgba(120, 60, 180, 0.14)');
+      neb1.addColorStop(0.5, 'rgba(60, 30, 110, 0.06)');
+      neb1.addColorStop(1, 'transparent');
+      bgCtx.fillStyle = neb1;
+      bgCtx.fillRect(0, 0, width, height);
+
+      // Nebula 2: Cerulean / Cyan Atmospheric Haze
+      const neb2 = bgCtx.createRadialGradient(
+        width * 0.85,
+        height * 0.15,
+        10,
+        width * 0.85,
+        height * 0.15,
+        width * 0.55
+      );
+      neb2.addColorStop(0, 'rgba(35, 194, 219, 0.12)');
+      neb2.addColorStop(0.4, 'rgba(58, 73, 201, 0.08)');
+      neb2.addColorStop(1, 'transparent');
+      bgCtx.fillStyle = neb2;
+      bgCtx.fillRect(0, 0, width, height);
+
+      // Nebula 3: Crimson Atlus Rim
+      const neb3 = bgCtx.createRadialGradient(
+        width * 0.25,
+        height * 0.8,
+        10,
+        width * 0.25,
+        height * 0.8,
+        width * 0.4
+      );
+      neb3.addColorStop(0, 'rgba(209, 35, 58, 0.07)');
+      neb3.addColorStop(1, 'transparent');
+      bgCtx.fillStyle = neb3;
+      bgCtx.fillRect(0, 0, width, height);
+
+      // Distant Sparkling Star Cluster
+      const clusterX = width * 0.78;
+      const clusterY = height * 0.72;
+      const clusterGlow = bgCtx.createRadialGradient(clusterX, clusterY, 0, clusterX, clusterY, 65);
+      clusterGlow.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+      clusterGlow.addColorStop(0.3, 'rgba(180, 220, 255, 0.15)');
+      clusterGlow.addColorStop(1, 'transparent');
+      bgCtx.fillStyle = clusterGlow;
+      bgCtx.beginPath();
+      bgCtx.arc(clusterX, clusterY, 65, 0, Math.PI * 2);
+      bgCtx.fill();
+    };
+
+    renderBackgroundCache();
+
+    // Star data with depth layers
     let stars = [];
     const initStars = () => {
       stars = [];
-      const starCount = Math.floor((width * height) / 3800);
+      const starCount = Math.floor((width * height) / 4200);
       for (let i = 0; i < starCount; i++) {
         stars.push({
           x: Math.random() * width,
@@ -39,72 +123,13 @@ export const SpaceCanvas = ({ isZoomed = false, activePlanetKey = null }) => {
     };
     initStars();
 
-    // Render loop
+    // Render loop (Optimized: single drawImage + star dots)
     let tick = 0;
     const render = () => {
       tick++;
-      ctx.clearRect(0, 0, width, height);
 
-      // Deep cosmic gradient
-      const bgGrad = ctx.createRadialGradient(
-        width * 0.65,
-        height * 0.45,
-        50,
-        width * 0.5,
-        height * 0.5,
-        Math.max(width, height) * 0.85
-      );
-      bgGrad.addColorStop(0, '#0d1127'); // deep indigo core
-      bgGrad.addColorStop(0.35, '#070918'); // midnight void
-      bgGrad.addColorStop(0.7, '#05060f');
-      bgGrad.addColorStop(1, '#020205'); // outer void
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, width, height);
-
-      // Cosmic Nebula Dust Clouds (like Reference Image 2)
-      // Nebula 1: Ethereal Violet Dust
-      const neb1 = ctx.createRadialGradient(
-        width * 0.75,
-        height * 0.35,
-        20,
-        width * 0.75,
-        height * 0.35,
-        width * 0.45
-      );
-      neb1.addColorStop(0, 'rgba(120, 60, 180, 0.14)');
-      neb1.addColorStop(0.5, 'rgba(60, 30, 110, 0.06)');
-      neb1.addColorStop(1, 'transparent');
-      ctx.fillStyle = neb1;
-      ctx.fillRect(0, 0, width, height);
-
-      // Nebula 2: Cerulean / Cyan Atmospheric Haze
-      const neb2 = ctx.createRadialGradient(
-        width * 0.85,
-        height * 0.15,
-        10,
-        width * 0.85,
-        height * 0.15,
-        width * 0.55
-      );
-      neb2.addColorStop(0, 'rgba(35, 194, 219, 0.12)');
-      neb2.addColorStop(0.4, 'rgba(58, 73, 201, 0.08)');
-      neb2.addColorStop(1, 'transparent');
-      ctx.fillStyle = neb2;
-      ctx.fillRect(0, 0, width, height);
-
-      // Nebula 3: Crimson Atlus Rim
-      const neb3 = ctx.createRadialGradient(
-        width * 0.25,
-        height * 0.8,
-        10,
-        width * 0.25,
-        height * 0.8,
-        width * 0.4
-      );
-      neb3.addColorStop(0, 'rgba(209, 35, 58, 0.07)');
-      neb3.addColorStop(1, 'transparent');
-      ctx.fillStyle = neb3;
-      ctx.fillRect(0, 0, width, height);
+      // Blit cached background & nebulae in a single draw operation
+      ctx.drawImage(bgCanvas, 0, 0);
 
       // Render Stars with subtle twinkle
       stars.forEach(star => {
@@ -127,18 +152,6 @@ export const SpaceCanvas = ({ isZoomed = false, activePlanetKey = null }) => {
         }
       });
       ctx.globalAlpha = 1;
-
-      // Distant Sparkling Star Cluster (like NASA Reference Image 2)
-      const clusterX = width * 0.78;
-      const clusterY = height * 0.72;
-      const clusterGlow = ctx.createRadialGradient(clusterX, clusterY, 0, clusterX, clusterY, 65);
-      clusterGlow.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
-      clusterGlow.addColorStop(0.3, 'rgba(180, 220, 255, 0.15)');
-      clusterGlow.addColorStop(1, 'transparent');
-      ctx.fillStyle = clusterGlow;
-      ctx.beginPath();
-      ctx.arc(clusterX, clusterY, 65, 0, Math.PI * 2);
-      ctx.fill();
 
       animFrameId = requestAnimationFrame(render);
     };

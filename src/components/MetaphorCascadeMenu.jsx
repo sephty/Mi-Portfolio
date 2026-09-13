@@ -1,7 +1,7 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
 
-export const MetaphorCascadeMenu = ({
+export const MetaphorCascadeMenu = React.memo(({
   activeKey,
   setActiveKey,
   onSelectNode,
@@ -37,15 +37,6 @@ export const MetaphorCascadeMenu = ({
       color: '#f59e0b',
       underColor: '#fbbf24',
       shadow: 'rgba(245, 158, 11, 0.8)',
-    },
-    experience: {
-      size: 'text-3xl sm:text-4xl lg:text-[3.9rem]',
-      indent: 56,
-      rotation: -1.2,
-      splotch: 'SelectionSplotch3.png',
-      color: '#4dcca0',
-      underColor: '#2dd4bf',
-      shadow: 'rgba(77, 204, 160, 0.8)',
     },
     contact: {
       size: 'text-3xl sm:text-4xl lg:text-[3.4rem]',
@@ -172,4 +163,6 @@ export const MetaphorCascadeMenu = ({
       </div>
     </div>
   );
-};
+});
+
+MetaphorCascadeMenu.displayName = 'MetaphorCascadeMenu';

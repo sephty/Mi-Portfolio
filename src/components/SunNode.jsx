@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SunNode = ({
+export const SunNode = React.memo(({
   avatarSrc,
   isActive = false,
   onClick,
@@ -95,4 +95,6 @@ export const SunNode = ({
       </div>
     </div>
   );
-};
+});
+
+SunNode.displayName = 'SunNode';

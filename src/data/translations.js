@@ -11,13 +11,11 @@ export const translations = {
     nav_about: "Sobre mí",
     nav_projects: "Proyectos",
     nav_skills: "Habilidades",
-    nav_experience: "Trayectoria",
     nav_contact: "Contacto",
 
     menu_about: "SOBRE MÍ",
     menu_projects: "PROYECTOS",
     menu_skills: "HABILIDADES",
-    menu_experience: "TRAYECTORIA",
     menu_contact: "CONTACTO",
 
     btn_close: "Cerrar",
@@ -28,7 +26,7 @@ export const translations = {
 
     // ABOUT SECTION
     about_title: "Sobre Mí",
-    about_header_tag: "[DOSSIER DE DESARROLLADOR]",
+    about_header_tag: "[DESARROLLADOR]",
     about_subtitle: "Perfil y Filosofía de Ingeniería",
     about_text: "Desarrollador enfocado en ingeniería de software backend con Java y Spring Boot, especializado en la creación de APIs REST robustas, arquitecturas de microservicios y soluciones de automatización escalables. Combino rigor analítico y creatividad pragmática para construir sistemas eficientes y tolerantes a fallos.",
     mission_title: "Misión",
@@ -41,7 +39,7 @@ export const translations = {
       "Mejorar continuamente",
       "Innovar con disciplina"
     ],
-    campuslands_label: "CAMPUSLANDS // COHORTE DE INGENIERÍA COLABORATIVA",
+    campuslands_label: "CAMPUSLANDS // ",
 
     // PROJECTS SECTION
     projects_title: "Proyectos",
@@ -64,32 +62,6 @@ export const translations = {
     skills_soft: "Competencias Profesionales",
     priority_01: "PRIORIDAD // 01",
     stack_02: "STACK // 02",
-
-    // EXPERIENCE SECTION
-    experience_title: "Trayectoria",
-    experience_header_title: "REGISTRO // TRAYECTORIA",
-    experience_header_tag: "[CRONOGRAMA DE HITOS]",
-    experience_subtitle: "Formación Profesional & Hitos Técnicos",
-    experience_items: [
-      {
-        period: "2025 - Presente",
-        role: "Desarrollador Backend Java & Spring Boot",
-        org: "Especialización & Proyectos Independientes",
-        desc: "Diseño e implementación de microservicios y APIs REST empresariales. Modelado de bases de datos relacionales y no relacionales, autenticación segura y optimización de consultas."
-      },
-      {
-        period: "2025 - 2026",
-        role: "Fellowship en Desarrollo de Software",
-        org: "Campuslands",
-        desc: "Entrenamiento intensivo en metodologías ágiles (Scrum), desarrollo colaborativo en equipo, arquitecturas cliente-servidor y resolución estructurada de problemas complejos."
-      },
-      {
-        period: "2024 - 2025",
-        role: "Ingeniería de Automatizaciones & Workflows con IA",
-        org: "Proyectos de Integración",
-        desc: "Construcción de pipelines automatizados con n8n, OpenAI y Google APIs para clasificación inteligente y notificación en tiempo real."
-      }
-    ],
 
     // CONTACT SECTION
     contact_title: "Contacto",
@@ -120,13 +92,11 @@ export const translations = {
     nav_about: "About Me",
     nav_projects: "Projects",
     nav_skills: "Skills",
-    nav_experience: "Experience",
     nav_contact: "Contact",
 
     menu_about: "ABOUT ME",
     menu_projects: "PROJECTS",
     menu_skills: "SKILLS",
-    menu_experience: "EXPERIENCE",
     menu_contact: "CONTACT",
 
     btn_close: "Close",
@@ -137,7 +107,7 @@ export const translations = {
 
     // ABOUT SECTION
     about_title: "About Me",
-    about_header_tag: "[DEVELOPER DOSSIER]",
+    about_header_tag: "[DEVELOPER]",
     about_subtitle: "Engineering Profile & Philosophy",
     about_text: "Software engineer specializing in backend development with Java and Spring Boot, architecting resilient RESTful services, microservice designs, and automated pipelines. Combines methodical problem-solving with pragmatic system design to deliver high-throughput, maintainable software.",
     mission_title: "Mission",
@@ -150,7 +120,7 @@ export const translations = {
       "Continuously refine craft",
       "Innovate with discipline"
     ],
-    campuslands_label: "CAMPUSLANDS // COLLABORATIVE ENGINEERING COHORT",
+    campuslands_label: "CAMPUSLANDS // ",
 
     // PROJECTS SECTION
     projects_title: "Projects",
@@ -173,32 +143,6 @@ export const translations = {
     skills_soft: "Core Engineering Competencies",
     priority_01: "PRIORITY // 01",
     stack_02: "STACK // 02",
-
-    // EXPERIENCE SECTION
-    experience_title: "Experience",
-    experience_header_title: "RECORD // CAREER TRAJECTORY",
-    experience_header_tag: "[TIMELINE & MILESTONES]",
-    experience_subtitle: "Professional Milestones & Career Trajectory",
-    experience_items: [
-      {
-        period: "2025 - Present",
-        role: "Java & Spring Boot Backend Developer",
-        org: "Specialization & Independent Projects",
-        desc: "Designing and deploying enterprise-grade REST APIs and microservices. Relational and document database modeling, JWT security, and query optimization."
-      },
-      {
-        period: "2025 - 2026",
-        role: "Software Development Fellowship",
-        org: "Campuslands",
-        desc: "Rigorous full-time software engineering training with Scrum methodologies, team-based code reviews, client-server architectures, and structured problem solving."
-      },
-      {
-        period: "2024 - 2025",
-        role: "Automation & AI Workflow Engineer",
-        org: "Integration Projects",
-        desc: "Architecting automated pipelines using n8n, OpenAI, and Google APIs for automated classification, data synchronization, and Telegram alerting."
-      }
-    ],
 
     // CONTACT SECTION
     contact_title: "Contact",
